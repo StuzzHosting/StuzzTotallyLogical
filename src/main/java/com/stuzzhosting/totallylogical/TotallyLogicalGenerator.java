@@ -55,5 +55,8 @@ class TotallyLogicalGenerator extends ChunkGenerator {
 		}
 		return result[y >> 4][( ( y & 0xF ) << 8 ) | ( ( z & 0xF ) << 4 ) | ( x & 0xF )];
 	}
-
+	@Override
+	public boolean canSpawn( World world, int x, int z ) {
+		return world.getHighestBlockYAt( x, z ) < 128;
+	}
 }

@@ -7,3 +7,4 @@ authors:
 description: 'A world generator that generates totally logical worlds. Nope, nothing crazy here!'
 
 main: com.stuzzhosting.totallylogical.Main
+load: startup
