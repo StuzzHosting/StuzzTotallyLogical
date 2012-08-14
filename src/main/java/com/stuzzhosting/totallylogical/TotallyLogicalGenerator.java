@@ -9,13 +9,14 @@ import org.bukkit.util.noise.SimplexNoiseGenerator;
 
 class TotallyLogicalGenerator extends ChunkGenerator {
 	private static final byte BEDROCK = (byte) Material.BEDROCK.getId();
+
 	private static final byte STONE = (byte) Material.MONSTER_EGGS.getId();
 
 	@Override
 	public byte[][] generateBlockSections( World world, Random random, int chunkX, int chunkZ, BiomeGrid biomes ) {
 		byte[][] result = new byte[world.getMaxHeight() >> 4][];
 
-		Random seed = new Random(world.getSeed());
+		Random seed = new Random( world.getSeed() );
 		SimplexNoiseGenerator exists = new SimplexNoiseGenerator( seed );
 		SimplexNoiseGenerator tall = new SimplexNoiseGenerator( seed );
 
@@ -27,9 +28,12 @@ class TotallyLogicalGenerator extends ChunkGenerator {
 
 				if ( exists.noise( x / 100.0, z / 100.0 ) < 0.2 ) {
 					boolean isTall = Math.abs( tall.noise( x / 20.0, z / 20.0 ) ) < 0.2;
-					for (int y = 0; y < world.getMaxHeight() / (isTall ? 1 : 4); y++) {
-						if (y <= random.nextInt(6)) {
+					for ( int y = 0; y < world.getMaxHeight() / ( isTall ? 1 : 4 ); y++ ) {
+						if ( y <= random.nextInt( 6 ) ) {
 							setBlock( result, x, y, z, BEDROCK );
+							continue;
+						}
+						if ( y == world.getMaxHeight() / 4 + 1 && random.nextBoolean() ) {
 							continue;
 						}
 
@@ -55,8 +59,11 @@ class TotallyLogicalGenerator extends ChunkGenerator {
 		}
 		return result[y >> 4][( ( y & 0xF ) << 8 ) | ( ( z & 0xF ) << 4 ) | ( x & 0xF )];
 	}
+
 	@Override
 	public boolean canSpawn( World world, int x, int z ) {
-		return world.getHighestBlockYAt( x, z ) < 128;
+		int y = world.getHighestBlockYAt( x, z );
+		return y > 0 && y < 128;
 	}
+
 }
