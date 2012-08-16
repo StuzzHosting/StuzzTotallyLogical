@@ -1,9 +1,14 @@
 package com.stuzzhosting.totallylogical;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
+import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.util.noise.SimplexNoiseGenerator;
 
@@ -64,6 +69,17 @@ class TotallyLogicalGenerator extends ChunkGenerator {
 	public boolean canSpawn( World world, int x, int z ) {
 		int y = world.getHighestBlockYAt( x, z );
 		return y > 0 && y < 128;
+	}
+
+	@Override
+	public List<BlockPopulator> getDefaultPopulators( World world ) {
+		return Arrays.asList( (BlockPopulator) new BlockPopulator() {
+			@Override
+			public void populate( World world, Random random, Chunk source ) {
+				
+			}
+
+		} );
 	}
 
 }

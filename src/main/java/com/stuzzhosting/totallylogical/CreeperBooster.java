@@ -14,7 +14,7 @@ class CreeperBooster implements Listener {
 
 	@EventHandler
 	public void onCreatureSpawn( CreatureSpawnEvent event ) {
-		if ( !( event.getEntity().getWorld().getGenerator() instanceof TotallyLogicalGenerator ) || event.getEntityType() != EntityType.CREEPER ) {
+		if ( event.getEntityType() != EntityType.CREEPER || !( event.getEntity().getWorld().getGenerator() instanceof TotallyLogicalGenerator ) ) {
 			return;
 		}
 
@@ -26,7 +26,7 @@ class CreeperBooster implements Listener {
 
 	@EventHandler
 	public void onEntityExplode( EntityExplodeEvent event ) {
-		if ( !( event.getEntity().getWorld().getGenerator() instanceof TotallyLogicalGenerator ) || event.getEntityType() != EntityType.CREEPER ) {
+		if ( event.getEntityType() != EntityType.CREEPER || !( event.getEntity().getWorld().getGenerator() instanceof TotallyLogicalGenerator ) ) {
 			return;
 		}
 

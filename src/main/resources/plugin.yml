@@ -4,7 +4,9 @@ authors:
   - Nightgunner5
   - 7031
 
-description: 'A world generator that generates totally logical worlds. Nope, nothing crazy here!'
+database: true
+
+description: 'This entire concept is totally logical. There is nothing more logical than being killed by absolutely everything at the same time. Plus, you get bonus points for not dying.'
 
 main: com.stuzzhosting.totallylogical.Main
 load: startup

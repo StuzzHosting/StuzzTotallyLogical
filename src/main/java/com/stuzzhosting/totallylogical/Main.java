@@ -1,6 +1,10 @@
 package com.stuzzhosting.totallylogical;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import javax.persistence.PersistenceException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginManager;
@@ -41,9 +45,22 @@ public class Main extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents( new CreeperBooster(), this );
 		pm.registerEvents( new ZombieMultiplier(), this );
-		pm.registerEvents( new PeopleKillPeople(), this );
+		pm.registerEvents( new PeopleKillPeople( getDatabase() ), this );
 
 		getServer().getScheduler().scheduleSyncRepeatingTask( this, new ConsolationPrize(), 40, 40 );
+		try {
+			getDatabase().find( ScoreHolder.class ).findRowCount();
+		} catch ( PersistenceException ex ) {
+			getLogger().info( "Initializing database..." );
+			installDDL();
+		}
+	}
+
+	@Override
+	public List<Class<?>> getDatabaseClasses() {
+		List<Class<?>> classes = new ArrayList<Class<?>>();
+		classes.add( ScoreHolder.class );
+		return classes;
 	}
 
 	@Override
